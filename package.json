@@ -1,5 +1,5 @@
 {
-  "name": "hackathon-demo",
+  "name": "datev-research-b2b-showcase",
   "version": "0.0.1",
   "private": true,
   "homepage": "https://github.com/DATEV-Research/",
@@ -11,20 +11,13 @@
   },
   "scripts": {
     "start": "npm run serve",
-    "preserve": "run-s libs:build",
     "serve": "lerna run serve",
     "build": "lerna run build",
     "test": "lerna run test",
     "lint": "lerna run lint",
-    "version": "lerna version",
-    "prepublish": "run-s libs:build",
-    "publish": "lerna publish from-package",
     "apps:build": "lerna run build --scope \"@apps/*\"",
     "apps:lint": "lerna run lint --scope \"@apps/*\"",
     "apps:test": "lerna run test --scope \"@apps/*\"",
-    "libs:build": "lerna run build --scope \"@datev-research/*\"",
-    "libs:lint": "lerna run lint --scope \"@datev-research/*\"",
-    "libs:test": "lerna run test --scope \"@datev-research/*\"",
     "prepare": "husky"
   },
   "dependencies": {
@@ -67,7 +60,6 @@
     "typescript": "^5.4.5"
   },
   "workspaces": [
-    "apps/*",
-    "libs/*"
+    "apps/*"
   ]
 }
