@@ -38,7 +38,7 @@
     "@datev-research/mandat-shared-solid-interop": "^1.0.2",
     "@datev-research/mandat-shared-solid-requests": "^1.0.2",
     "@datev-research/mandat-shared-theme": "^1.0.2",
-    "@datev-research/mandat-shared-utils": "^1.0.2",
+    "@datev-research/mandat-shared-utils": "^1.0.3",
     "@vueuse/components": "^11.1.0",
     "@vueuse/core": "^11.1.0",
     "github-fork-ribbon-css": "^0.2.3",
