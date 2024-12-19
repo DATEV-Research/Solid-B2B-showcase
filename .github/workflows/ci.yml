@@ -4,11 +4,9 @@ on:
   pull_request:
     branches:
       - main
-      - market
   push:
     branches:
       - main
-      - market
 
 jobs:
   install:
@@ -91,7 +89,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs:
-      - build
+      - install
 
     steps:
       - name: Checkout code

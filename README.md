@@ -1,6 +1,6 @@
-# MANDAT Hackathon Demo
+# SOLID B2B Showcase - MANDAT Demo Apps
 
-[![CI](https://github.com/mandat-project/hackathon-demo/actions/workflows/ci.yml/badge.svg?branch=market)](https://github.com/mandat-project/hackathon-demo/actions/workflows/ci.yml)
+[![CI](https://github.com/DATEV-Research/Solid-B2B-showcase/actions/workflows/ci.yml/badge.svg?branch=market)](https://github.com/DATEV-Research/Solid-B2B-showcase/actions/workflows/ci.yml)
 
 In this demo, we showcase the initialisation of a business contract between the SME and the BANK in form of a credit
 grant.
@@ -10,9 +10,9 @@ demand". You may follow the numeric ordering to get an idea of the flow.
 ![Figure 1](/img/current_state.png)
 Figure 1: The current state of the demo.
 
-- The _Credit App_ is available at [/lisa/](/lisa/).
-- The _Banking App_ is available at [/tom/](/tom/).
-- The _Data App_ is available at [/max/](/max/).
+- The _Credit App_ is available at [/bank/](/bank/).
+- The _Banking App_ is available at [/sme/](/sme/).
+- The _Data App_ is available at [/tao/](/tao/).
 - We use Solid Pods provided by
   a [Community Solid Server](https://github.com/CommunitySolidServer/CommunitySolidServer) (v5.0.0) instance.
 
@@ -196,14 +196,8 @@ Dementsprechend ist ein npm install auch zwingend im **Root** Verzeichnis auszuf
 
 
 ### Eine neue Lib erstellen
-1. Ordner unter `/libs` anlegen
-2. `package.json` anlegen 
-   2. Name gem. Format `@shared/NAME_DER_LIB`
-3. `tsconfig.json` anlegen
-   3. TS-Baseconfig im Root extenden
-   3. `include` mit den entsprechenden Dateien ergänzen
-4. `index.ts` anlegen (zur Steuerung, was exportiert wird)
-5. In der TS-Base-Config `ts.base-config.json` unter `paths` den Package-Namen mit Pfad zur Index-Datei ergänzen (ermöglicht Auto-Import)
+
+Go to [Solid-B2B-showcase-libs](https://github.com/DATEV-Research/Solid-B2B-showcase-libs)
 
 ### Eine neue App erstellen
 1. Ordner entsprechend dem App-Namen unter `/apps` anlegen
