@@ -15,7 +15,7 @@
         <Suspense timeout="0">
           <!-- main content -->
 
-          <DemandProcessor :demandUri="demandUri" :demandState="activeTab"/>
+          <DemandProcessor :highlight="latestDiff.includes(demandUri)" :demandUri="demandUri" :demandState="activeTab"/>
 
           <!-- loading state -->
           <template #fallback>
@@ -30,6 +30,15 @@
   </div>
   <a class="github-fork-ribbon right-bottom fixed" href="https://github.com/DATEV-Research/Solid-B2B-showcase"
      data-ribbon="GitHub" title="GitHub">GitHub</a>
+
+  <Toast position="bottom-center" group="updateAvailableToast">
+    <template #message="slotProps">
+        <div class="flex flex-wrap">
+            <div class="font-medium text-lg my-4">{{ slotProps.message.summary }}</div>
+            <Button class="w-full" label="Update" severity="success" @click="onApplyUpdatedDemands()"></Button>
+        </div>
+    </template>
+</Toast>
 </template>
 
 <style scoped>
@@ -78,6 +87,8 @@ import {TabItemType, TabList} from "@datev-research/mandat-shared-components";
 import DemandSkeleton from "@/components/DemandSkeleton.vue";
 import {TAB_STATE} from "@/enums/tabsState";
 import NoDataFound from "@/components/NoDataFound.vue";
+import { Store } from "n3";
+import { useInterval } from "@vueuse/core";
 
 
 const toast = useToast();
@@ -86,6 +97,10 @@ const { session } = useSolidSession();
 const shapeTreeUri = 'https://solid.aifb.kit.edu/shapes/mandat/credit.tree#creditDemandTree';
 const isLoading = ref(false);
 const demandUris = ref<string[]>([]);
+
+useInterval(5_000, { callback: () => { fetchDemandUris(memberOf.value ? memberOf.value : `${session.webId}`, true) } });
+let latestPollingDemandsList: string[] = [];
+const latestDiff = ref<string>("");
 
 const { memberOf } = useSolidProfile()
 const isLoggedIn = computed(() => {
@@ -105,14 +120,19 @@ function tabListItemChange(itemId: TAB_STATE) {
 // refetch demandUris on login
 watch(() => isLoggedIn.value, (isLoggedIn) => isLoggedIn ? fetchDemandUris(((memberOf.value) ? memberOf.value : session.webId!)) : {}, { immediate: true });
 
+function onApplyUpdatedDemands() {
+  toast.removeGroup("updateAvailableToast");
+  latestDiff.value = [...latestPollingDemandsList].sort().join('').replace(new RegExp(demandUris.value.join('|'), 'g'), '');
+  demandUris.value = latestPollingDemandsList;
+}
+
 // discovers all containers including demands and add their contents (demands) to demandUris
-async function fetchDemandUris(webId: string): Promise<void> {
+async function fetchDemandUris(webId: string, informAboutUpdate = false): Promise<void> {
 
-  demandUris.value = [];
   isLoading.value = true;
-
   await getDataRegistrationContainers(webId, shapeTreeUri, session)
-      .then(containerUris => containerUris.forEach(containerUri => getResource(containerUri, session)
+      .then(containerUris => 
+        Promise.all(containerUris.map(containerUri => getResource(containerUri, session)
           .catch((err) => {
             toast.add({
               severity: "error",
@@ -125,10 +145,31 @@ async function fetchDemandUris(webId: string): Promise<void> {
           })
           .then(resp => resp.data)
           .then(txt => parseToN3(txt, containerUri))
-          .then(parsedN3 => parsedN3.store)
+          .then(parsedN3 => [parsedN3.store, containerUri] satisfies [Store, string])
+      )))
+      .then(([[store, containerUri]]) => store.getObjects(containerUri, LDP("contains"), null).map((node) => node.value))
+      .then(demands => { 
+        const demandsFlattened = demands.flat()
+        const isEqual = [...demandUris.value].sort().join('') === [...demandsFlattened].sort().join('');
+        
+        if (isEqual) {
+          return [];
+        }
 
-          .then(store => demandUris.value.push(...store.getObjects(containerUri, LDP("contains"), null).map((node) => node.value)))
-      ))
+        latestPollingDemandsList = demandsFlattened;
+
+        if (informAboutUpdate) {
+          toast.removeGroup("updateAvailableToast");
+          toast.add({
+            severity: "info",
+            summary: "New demands available. Want to load them?",
+            life: 0,
+            group: "updateAvailableToast",
+          })
+        } else {
+          demandUris.value = demandsFlattened;
+        }
+       })
       .finally(() => isLoading.value = false);
 }
 </script>

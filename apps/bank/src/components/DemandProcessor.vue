@@ -1,6 +1,6 @@
 <template>
   <div v-show="tabState === currentDemandState" v-if="currentState!== STATES.NoOperation" class="pb-4">
-    <Card :data-demand-id="demandUri">
+    <Card :class="highlight ? 'bg-yellow-100' : ''" :data-demand-id="demandUri">
       <template #content>
         <div class="card-container">
         <div class="grid pt-0">
@@ -138,7 +138,7 @@ import Card from "primevue/card";
 import {useToast} from 'primevue/usetoast';
 import {computed, reactive, Ref, ref, watch} from 'vue';
 
-const props = defineProps<{ demandUri: string, demandState:string }>();
+const props = defineProps<{ highlight?: boolean; demandUri: string, demandState:string }>();
 const {accessInbox, authAgent, memberOf} = useSolidProfile()
 const toast = useToast();
 const appMemory = useCache();
