@@ -1,12 +1,4 @@
 services:
-
-  mandat-app-auth:
-    build:
-      context: ./apps/auth
-      dockerfile: ../../Dockerfile-app
-    ports:
-      - "8084:80"
-
   mandat-app-bank:
     build:
       context: ./apps/bank
