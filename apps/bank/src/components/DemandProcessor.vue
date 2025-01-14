@@ -1,6 +1,6 @@
 <template>
   <div v-show="tabState === currentDemandState" v-if="currentState!== STATES.NoOperation" class="pb-4">
-    <Card :class="highlight ? 'bg-yellow-100' : ''" :data-demand-id="demandUri">
+    <Card :class="highlight ? 'highlight-card' : ''" :data-demand-id="demandUri">
       <template #content>
         <div class="card-container">
         <div class="grid pt-0">
@@ -756,6 +756,10 @@ setTimeout(()=>{
   padding-top:0px
 }
 
+.highlight-card {
+  border: 2px solid rgba(182,202,209,1);
+  background: rgba(246,247,249,1);
+}
 
 .p-disabled{
   background-color: rgba(237, 240, 243, 1); /* Change to your desired color */
