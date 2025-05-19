@@ -100,7 +100,7 @@ export const getAccessBeingSetBody = (memberOf:string, forAgent:string, demandUr
     <#accessNeed>
       a interop:AccessNeed ;
       interop:accessMode acl:Read ;
-      interop:registeredShapeTree <https://solid.aifb.kit.edu/shapes/mandat/credit.tree#creditOfferTree> ;
+      interop:registeredShapeTree <https://solid.dev.datev.de/shapes/mandat/credit.tree#creditOfferTree> ;
       interop:hasDataInstance <${resource}> ;
       interop:accessNecessity interop:accessRequired .
 
@@ -114,7 +114,7 @@ export const getAccessBeingSetBody = (memberOf:string, forAgent:string, demandUr
     <#accessNeed2>
       a interop:AccessNeed ;
       interop:accessMode acl:Append ;
-      interop:registeredShapeTree <https://solid.aifb.kit.edu/shapes/mandat/credit.tree#creditOrderTree> ;
+      interop:registeredShapeTree <https://solid.dev.datev.de/shapes/mandat/credit.tree#creditOrderTree> ;
       interop:accessNecessity interop:accessRequired .
 
     <#accessDescriptionSet>

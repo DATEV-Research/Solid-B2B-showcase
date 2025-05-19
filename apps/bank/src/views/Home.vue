@@ -83,13 +83,13 @@ import NoDataFound from "@/components/NoDataFound.vue";
 const toast = useToast();
 const { session } = useSolidSession();
 
-const shapeTreeUri = 'https://solid.aifb.kit.edu/shapes/mandat/credit.tree#creditDemandTree';
+const shapeTreeUri = 'https://solid.dev.datev.de/shapes/mandat/credit.tree#creditDemandTree';
 const isLoading = ref(false);
 const demandUris = ref<string[]>([]);
 
 const { memberOf } = useSolidProfile()
 const isLoggedIn = computed(() => {
-  return ((session.webId && !memberOf.value) || (session.webId && memberOf.value && session.rdp) ? true : false)
+  return (!!((session.webId && !memberOf.value) || (session.webId && memberOf.value && session.rdp)))
 });
 
 const tabMenu = ref<TabItemType[]>([
