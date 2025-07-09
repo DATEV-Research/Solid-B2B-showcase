@@ -94,7 +94,7 @@ import { useInterval } from "@vueuse/core";
 const toast = useToast();
 const { session } = useSolidSession();
 
-const shapeTreeUri = 'https://solid.aifb.kit.edu/shapes/mandat/credit.tree#creditDemandTree';
+const shapeTreeUri = 'https://solid.dev.datev.de/shapes/mandat/credit.tree#creditDemandTree';
 const isLoading = ref(false);
 const demandUris = ref<string[]>([]);
 
@@ -104,7 +104,9 @@ const latestDiff = ref<string>("");
 
 const { memberOf } = useSolidProfile()
 const isLoggedIn = computed(() => {
-  return ((session.webId && !memberOf.value) || (session.webId && memberOf.value && session.rdp) ? true : false)
+  return (
+      (session.webId && !(memberOf.value)) || (session.webId && memberOf.value && session.rdp)
+  );
 });
 
 const tabMenu = ref<TabItemType[]>([
@@ -128,6 +130,14 @@ function onApplyUpdatedDemands() {
 
 // discovers all containers including demands and add their contents (demands) to demandUris
 async function fetchDemandUris(webId: string, informAboutUpdate = false): Promise<void> {
+
+  ///TODO: remove console output
+  console.log("WEBID :" + webId)
+  console.log("SHAPETREE :" + shapeTreeUri)
+  console.log("MEMBER OF :" + memberOf.value)
+  console.log("SESSION.RDP :" + session.rdp)
+  console.log("SESSION :" + session)
+
 
   isLoading.value = true;
   await getDataRegistrationContainers(webId, shapeTreeUri, session)
