@@ -160,7 +160,7 @@ async function getAdsFromMarket() {
   isLoadingAds.value = true;
   try {
 
-    const marketURI = "https://solid.dev.datev.de/market/profile/card"
+    const marketURI = "https://market.solid.dev.datev.de/profile/card"
     const registrySetMarket = (await fetchStoreOf(marketURI, session)).getObjects(null,INTEROP("hasRegistrySet"),null)[0].value;
     const marketStore = await fetchStoreOf(registrySetMarket, session);
 

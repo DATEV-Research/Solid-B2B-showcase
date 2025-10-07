@@ -27,7 +27,7 @@ const isLoggedIn = computed(() => {
 const isLoading = ref(false);
 
 const documentCreationDemands = ref(new Map<string, Store | null>());
-const documentDemandContainerUri = ref("https://solid.dev.datev.de/tax/documents/demands/");
+const documentDemandContainerUri = ref("https://tax.solid.dev.datev.de/documents/demands/");
 // ! this should be dynamic
 
 // auto refetch on ldn
