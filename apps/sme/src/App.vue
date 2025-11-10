@@ -50,12 +50,6 @@ const routeName = computed<string>(() => `${route.name}`);
 //const { isLoggedIn } = useIsLoggedIn();
 
 const isLoggedIn = computed(() => {
-
-  //TODO: remove console output
-  console.log("APP webid : " + session.webId)
-  console.log("APP memberOf : " + memberOf.value)
-  console.log("APP session.rdp : " + session.rdp)
-
   return (
       (session.webId && !(memberOf.value)) || (session.webId && memberOf.value && session.rdp)
   );

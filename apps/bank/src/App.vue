@@ -41,12 +41,6 @@ watch(hasUpdatedAvailable, () => (isOpen.value = hasUpdatedAvailable.value));
 const { session, restoreSession } = useSolidSession();
 const { memberOf } = useSolidProfile()
 const isLoggedIn = computed(() => {
-
-  //TODO: remove console output
-  console.log("APP webid : " + session.webId)
-  console.log("APP memberOf : " + memberOf.value)
-  console.log("APP session.rdp : " + session.rdp)
-
   return ((session.webId && !memberOf) || (session.webId && memberOf && session.rdp) ? true : false)
 });
 

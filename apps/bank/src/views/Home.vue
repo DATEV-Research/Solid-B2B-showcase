@@ -130,15 +130,6 @@ function onApplyUpdatedDemands() {
 
 // discovers all containers including demands and add their contents (demands) to demandUris
 async function fetchDemandUris(webId: string, informAboutUpdate = false): Promise<void> {
-
-  ///TODO: remove console output
-  console.log("WEBID :" + webId)
-  console.log("SHAPETREE :" + shapeTreeUri)
-  console.log("MEMBER OF :" + memberOf.value)
-  console.log("SESSION.RDP :" + session.rdp)
-  console.log("SESSION :" + session)
-
-
   isLoading.value = true;
   await getDataRegistrationContainers(webId, shapeTreeUri, session)
       .then(containerUris => 
