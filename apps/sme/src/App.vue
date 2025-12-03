@@ -1,5 +1,5 @@
 <template>
-  <DacklHeaderBar app-name="Easy Loan" :app-logo="appLogo" :isLoggedIn="isLoggedIn" :webId="session.webId" />
+  <DacklHeaderBar app-name="Easy Loan" :app-logo="appLogo" :isLoggedIn="isLoggedIn" :webId="session.webId" :redirect_uri="redirect_uri"/>
 
   <div class="px-4 pt-3 bg-gradient-blue">
     <TabList class="mt-4" @item-change="tabListItemChange" :model="tabMenu" :active="routeName" />
@@ -42,18 +42,19 @@ import {computed, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import router from "./router";
 
+const redirect_uri = "https://d90fxl13z3e4j.cloudfront.net/demands";
 const appLogo = require('@/assets/logo.svg');
 const route = useRoute()
 const { hasUpdatedAvailable, refreshApp } = useServiceWorkerUpdate();
 const isOpen = ref(false);
 const routeName = computed<string>(() => `${route.name}`);
-//const { isLoggedIn } = useIsLoggedIn();
+const { isLoggedIn } = useIsLoggedIn();
 
-const isLoggedIn = computed(() => {
-  return (
-      (session.webId && !(memberOf.value)) || (session.webId && memberOf.value && session.rdp)
-  );
-});
+//const isLoggedIn = computed(() => {
+//  return (
+//      (session.webId && !(memberOf.value)) || (session.webId && memberOf.value && session.rdp)
+//  );
+//});
 
 const { session, restoreSession } = useSolidSession();
 const { memberOf } = useSolidProfile()
