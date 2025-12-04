@@ -21,6 +21,7 @@ import Divider from 'primevue/divider';
 const toast = useToast();
 const {session} = useSolidSession();
 const {memberOf} = useSolidProfile()
+
 const isLoggedIn = computed(() => {
   return ((session.webId && !memberOf) || (session.webId && memberOf && session.rdp) ? true : false)
 })

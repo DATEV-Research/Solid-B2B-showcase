@@ -24,7 +24,12 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import Toast from "primevue/toast";
-import { useServiceWorkerUpdate, useSolidProfile, useSolidSession } from "@datev-research/mandat-shared-composables";
+import {
+  useIsLoggedIn,
+  useServiceWorkerUpdate,
+  useSolidProfile,
+  useSolidSession
+} from "@datev-research/mandat-shared-composables";
 import {DacklHeaderBar, UnauthenticatedCard} from "@datev-research/mandat-shared-components";
 import router from "./router";
 
@@ -36,9 +41,11 @@ watch(hasUpdatedAvailable, () => {
 });
 const { session, restoreSession } = useSolidSession();
 const { memberOf } = useSolidProfile()
+
 const isLoggedIn = computed(() => {
   return ((session.webId && !memberOf) || (session.webId && memberOf && session.rdp) ? true : false)
-})
+});
+
 
 const backgroundColor = ref("linear-gradient(90deg, #6d0d85, #c76dde)");
 // re-use Solid session
